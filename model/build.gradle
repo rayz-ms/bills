@@ -1,0 +1,36 @@
+plugins {
+    id 'application'
+    id 'java'
+}
+
+ext {
+	immutablesVersion = '2.9.3'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+
+    compileOnly  group: 'org.immutables', name: 'value', version: "$immutablesVersion"
+	annotationProcessor group: 'org.immutables', name: 'value', version: "$immutablesVersion"
+	implementation group: 'org.immutables', name: 'value-annotations', version: "$immutablesVersion"
+	annotationProcessor group: 'org.immutables', name: 'value-annotations', version: "$immutablesVersion"
+	implementation group: 'org.immutables', name: 'builder', version: "$immutablesVersion"
+
+	implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+buildDir = '../build/model'

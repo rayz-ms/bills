@@ -1,0 +1,45 @@
+plugins {
+    id 'application'
+    id 'java'
+    id 'io.spring.dependency-management'
+}
+
+ext {
+	immutablesVersion = '2.9.3'
+    springBootVersion = '3.0.6'
+    springDataMongodbVersion = '4.0.5'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+
+    compileOnly  group: 'org.immutables', name: 'value', version: "$immutablesVersion"
+	annotationProcessor group: 'org.immutables', name: 'value', version: "$immutablesVersion"
+	implementation group: 'org.immutables', name: 'value-annotations', version: "$immutablesVersion"
+	annotationProcessor group: 'org.immutables', name: 'value-annotations', version: "$immutablesVersion"
+	implementation group: 'org.immutables', name: 'builder', version: "$immutablesVersion"
+
+	implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+
+    implementation project(':model')
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+
+    implementation group: 'org.springframework.data', name: 'spring-data-mongodb', version: "$springDataMongodbVersion"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+buildDir = '../build/repository'
